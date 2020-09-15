@@ -58,4 +58,4 @@ for result in results:
               'O segundo evento é: '+event_2+' deve apostar em '+bet_2+' na banca '+book_2+' Link: '+link_2+'\n'
               'Mais informações:\n'
               'O esporte é: '+sport_1+'\n'
-              'A  liga é: '+league_1+'\n')
+              'A                       liga é: '+league_1+'\n')
