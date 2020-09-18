@@ -52,7 +52,7 @@ prec_max = sys.argv[3]
 
 # Pega a lista de produtos na página solicitada com filtros
 
-url_eletronicos='https://df.olx.com.br/distrito-federal-e-regiao?ot=1&pe='+prec_max+'&ps='+prec_min+'&q='+busca
+url_eletronicos='https://df.olx.com.br/distrito-federal-e-regiao?ot=1&pe='+prec_max+'&ps='+prec_min+'&q='+busca+'&sf=1'
 data = json_from_url(url_eletronicos)
 
 # Entra em cada anúncio e mostra o telefone
