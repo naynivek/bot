@@ -12,9 +12,7 @@ import time
 import telepot
 
 
-#bot = telepot.Bot('1223273819:AAGIleGROBgbWyGT77tqeSZR9QZbMyhXMpM')
-#bot.getMe()
-#bot.getUpdates()
+bot = telepot.Bot('1223273819:AAGIleGROBgbWyGT77tqeSZR9QZbMyhXMpM')
 
 def json_from_url(url):
     headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36'}
@@ -32,10 +30,18 @@ def mostra_dados_do_anuncio(url):
     phone =  data['ad']['phone']['phone']
     user = data['ad']['user']['name']
     preco = data['ad']['price']
-    print('Vendedor=',user)
-    print('Telefone=',phone)
-    print('Descrição=',descricao)
-    print('preco=',preco)
+    vendedor = 'Vendedor: '+user
+    telefone = 'Telefone: '+phone
+    descri = 'Descrição: '+descricao
+    price = 'preco: '+str(preco)
+    print(vendedor)
+    print(telefone)
+    print(descri)
+    print(price)
+#    bot.sendMessage(89627667, vendedor)
+#    bot.sendMessage(89627667, telefone)
+#    bot.sendMessage(89627667, descri)
+#    bot.sendMessage(89627667, price)
 
 # Pega a lista de produtos da área de eletrônicos
 url_eletronicos='https://df.olx.com.br/?ot=1&q=iphone&sf=1'
@@ -48,36 +54,39 @@ for anuncio in adList:
     subject = anuncio.get('subject')
     lista.append(anuncio.get('listId'))
     if subject: 
-        print('------------------------')
         descricao = anuncio.get('subject')        
         url = anuncio.get('url')
-        print('Descricao do produto:',descricao)
-        print('URL do produto=',url)
-        mostra_dados_do_anuncio(url)
-
+        mensagem = ('-----------------------------------'+'\n'
+        'Nova oferta encontrada!'+'\n'
+        'Descrição do produto: '+descricao+'\n'
+        'Link do produto: '+url            )
+#        bot.sendMessage(89627667, mensagem)
+#        mostra_dados_do_anuncio(url)
+#        bot.sendMessage(89627667, 'bot rodando')
+print('bot rodando')       
 while True:
-    time.sleep(300)
+    time.sleep(60)
+    data_new = json_from_url(url_eletronicos)
+    a=0
     try:
-        data_new = json_from_url(url_eletronicos)
         adList = data_new['listingProps']['adList']    
         for anuncio in adList:
             subject = anuncio.get('subject')
             if subject and anuncio.get('listId') not in lista:
                 lista.append(anuncio.get('listId'))
-                print('\n------------------------')
-                print('Nova oferta encontrada!')
                 descricao = anuncio.get('subject')        
                 url = anuncio.get('url')
-                print('Descricao do produto:',descricao)
-                print('URL do produto=',url)
+                mensagem = ('-----------------------------------'+'\n'
+                'Nova oferta encontrada!'+'\n'
+                'Descrição do produto: '+descricao+'\n'
+                'Link do produto: '+url            )
+#                bot.sendMessage(89627667, mensagem)
+                print(mensagem)
                 mostra_dados_do_anuncio(url)
-                print('------------------------')
+                a=1
+        if a == 0:
+            print('Nenhuma oferta nova no momento')
     except:
-        print('\nsErro ao buscar ofertas\n')
-
-
-
-
-
+        print('Erro ao buscar as ofertas')
 
 
