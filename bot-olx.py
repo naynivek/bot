@@ -35,10 +35,10 @@ def mostra_dados_do_anuncio(url):
     telefone = 'Telefone: '+phone
     descri = 'Descrição: '+descricao
     price = 'preco: '+str(preco)
-    bot.sendMessage(89627667, vendedor)
-    bot.sendMessage(89627667, telefone)
-    bot.sendMessage(89627667, descri)
-    bot.sendMessage(89627667, price)
+    bot.sendMessage(usuario, vendedor)
+    bot.sendMessage(usuario, telefone)
+    bot.sendMessage(usuario, descri)
+    bot.sendMessage(usuario, price)
 
 # Declara o token do bot
 bot = telepot.Bot('1223273819:AAGIleGROBgbWyGT77tqeSZR9QZbMyhXMpM')
@@ -49,6 +49,7 @@ bot = telepot.Bot('1223273819:AAGIleGROBgbWyGT77tqeSZR9QZbMyhXMpM')
 busca = sys.argv[1]
 prec_min = sys.argv[2]
 prec_max = sys.argv[3]
+usuario = sys.argv[4]
 
 # Pega a lista de produtos na página solicitada com filtros
 
@@ -88,12 +89,12 @@ while True:
                 'Nova oferta encontrada!'+'\n'
                 'Descrição do produto: '+descricao+'\n'
                 'Link do produto: '+url            )
-                bot.sendMessage(89627667, mensagem)
+                bot.sendMessage(usuario, mensagem)
                 mostra_dados_do_anuncio(url)
                 a=1
 #        if a == 0:
 #            print('Nenhuma oferta nova no momento')
     except:
-        bot.sendMessage(89627667, 'Erro ao buscar as ofertas')
+        bot.sendMessage(usuario, 'Erro ao buscar as ofertas')
 
 
