@@ -5,15 +5,15 @@ Created on Fri Sep  4 12:23:15 2020
 @author: k_matos
 """
 
+# Importa as bibliotecas
+
 from bs4 import BeautifulSoup
 import requests
 import json  
 import time
 import telepot
 
-
-bot = telepot.Bot('1223273819:AAGIleGROBgbWyGT77tqeSZR9QZbMyhXMpM')
-
+# Função que coleta dados da página 
 def json_from_url(url):
     headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36'}
     page = requests.get(url, headers=headers)
@@ -21,9 +21,7 @@ def json_from_url(url):
     data_json = soup.find(id='initial-data').get('data-json')
     return json.loads(data_json)
 
-# Função que recebe url do anúncio
-# e mostra nome do vendedor, telefone,
-# descrição do produto e preço
+# Função que recebe url do anúncio e mostra nome do vendedor, telefone, descrição do produto e preço
 def mostra_dados_do_anuncio(url):
     data = json_from_url(url)
     descricao = (data['ad']['body']).replace('<br>','\n')
@@ -43,8 +41,19 @@ def mostra_dados_do_anuncio(url):
 #    bot.sendMessage(89627667, descri)
 #    bot.sendMessage(89627667, price)
 
-# Pega a lista de produtos da área de eletrônicos
-url_eletronicos='https://df.olx.com.br/?ot=1&q=iphone&sf=1'
+# Declara o token do bot
+bot = telepot.Bot('1223273819:AAGIleGROBgbWyGT77tqeSZR9QZbMyhXMpM')
+
+
+# Estipula os filtros
+
+busca = 'PS4'
+prec_min = '800'
+prec_max = '1500' 
+
+# Pega a lista de produtos na página solicitada com filtros
+
+url_eletronicos='https://df.olx.com.br/distrito-federal-e-regiao?ot=1&pe='+prec_max+'&ps='+prec_min+'&q='+busca
 data = json_from_url(url_eletronicos)
 
 # Entra em cada anúncio e mostra o telefone
