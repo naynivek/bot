@@ -1,1 +1,1 @@
-# bot_surebet
+# bot
