@@ -12,6 +12,7 @@ import requests
 import json  
 import time
 import telepot
+import sys
 
 # Função que coleta dados da página 
 def json_from_url(url):
@@ -47,9 +48,9 @@ bot = telepot.Bot('1223273819:AAGIleGROBgbWyGT77tqeSZR9QZbMyhXMpM')
 
 # Estipula os filtros
 
-busca = 'PS4'
-prec_min = '800'
-prec_max = '1500' 
+busca = sys.argv[1]
+prec_min = sys.argv[2]
+prec_max = sys.argv[3]
 
 # Pega a lista de produtos na página solicitada com filtros
 
