@@ -72,7 +72,12 @@ for anuncio in adList:
 #        bot.sendMessage(89627667, mensagem)
 #        mostra_dados_do_anuncio(url)
 #        bot.sendMessage(89627667, 'bot rodando')
-print('bot rodando')       
+bot.sendMessage(usuario, 'Bot rodando com o seguinte filtro \n+ \
+                Busca: '+busca+' \n+ \
+                Preço mínimo: '+prec_min+'\n \
+                Preço maximo: '+prec_max+'\n \
+                Usuário: '+usuario+'\n \
+                ')      
 while True:
     time.sleep(300)
     data_new = json_from_url(url_eletronicos)
@@ -94,7 +99,7 @@ while True:
                 a=1
 #        if a == 0:
 #            print('Nenhuma oferta nova no momento')
-    except:
-        bot.sendMessage(usuario, 'Erro ao buscar as ofertas')
+    except Exception as e: bot.sendMessage(usuario, e)
+        
 
 
