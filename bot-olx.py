@@ -72,10 +72,10 @@ for anuncio in adList:
 #        bot.sendMessage(89627667, mensagem)
 #        mostra_dados_do_anuncio(url)
 #        bot.sendMessage(89627667, 'bot rodando')
-bot.sendMessage(usuario, 'Bot rodando com o seguinte filtro \n+ \
-                Busca: '+busca+' \n+ \
+bot.sendMessage(usuario, 'Bot rodando com o seguinte filtro \n \
+                Busca: '+busca+' \n \
                 Preço mínimo: '+prec_min+'\n \
-                Preço maximo: '+prec_max+'\n \
+                Preço máximo: '+prec_max+'\n \
                 Usuário: '+usuario+'\n \
                 ')      
 while True:
