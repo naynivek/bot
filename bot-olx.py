@@ -125,7 +125,8 @@ while True:
                 a=1
 #        if a == 0:
 #            print('Nenhuma oferta nova no momento')
-    except Exception as e: bot.sendMessage(usuario, e)
+    except:
+        bot.sendMessage(usuario, 'Problemas para puxar os anúncios')
         
 
 
