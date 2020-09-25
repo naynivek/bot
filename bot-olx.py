@@ -20,9 +20,13 @@ import sys
 def json_from_url(url):
     headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36'}
     page = requests.get(url, headers=headers)
-    soup = BeautifulSoup(page.text, 'html.parser')
-    data_json = soup.find(id='initial-data').get('data-json')
-    return json.loads(data_json)
+    if page.status_code == 200:
+        soup = BeautifulSoup(page.text, 'html.parser')
+        data_json = soup.find(id='initial-data').get('data-json')
+        return json.loads(data_json)
+    else:
+        return False
+        
 
 # Função que recebe url do anúncio e mostra nome do vendedor, telefone, descrição do produto e preço
 def mostra_dados_do_anuncio(url):
@@ -43,7 +47,6 @@ def mostra_dados_do_anuncio(url):
 # Declara o token do bot
 bot = telepot.Bot('1223273819:AAGIleGROBgbWyGT77tqeSZR9QZbMyhXMpM')
 
-
 # Estipula os filtros
 
 busca = sys.argv[1]
@@ -51,10 +54,22 @@ prec_min = sys.argv[2]
 prec_max = sys.argv[3]
 usuario = sys.argv[4]
 
+
 # Pega a lista de produtos na página solicitada com filtros
 
 url_eletronicos='https://df.olx.com.br/distrito-federal-e-regiao?ot=1&pe='+prec_max+'&ps='+prec_min+'&q='+busca+'&sf=1'
 data = json_from_url(url_eletronicos)
+if data is False:
+    time.sleep(3)
+    data = json_from_url(url_eletronicos)
+    if data is False:
+        time.sleep(3)
+        data = json_from_url(url_eletronicos)
+        if data is False:
+            time.sleep(3)
+            data = json_from_url(url_eletronicos)
+            if data is False:
+                bot.sendMessage(usuario, 'Problemas para acessar o site, ele pode estar fora do ar')
 
 # Entra em cada anúncio e mostra o telefone
 lista = []
@@ -81,6 +96,17 @@ bot.sendMessage(usuario, 'Bot rodando com o seguinte filtro \n \
 while True:
     time.sleep(300)
     data_new = json_from_url(url_eletronicos)
+    if data_new is False:
+        time.sleep(3)
+        data_new = json_from_url(url_eletronicos)
+        if data_new is False:
+            time.sleep(3)
+            data_new = json_from_url(url_eletronicos)
+            if data_new is False:
+                time.sleep(3)
+                data_new = json_from_url(url_eletronicos)
+                if data_new is False:
+                    bot.sendMessage(usuario, 'Problemas para acessar o site, ele pode estar fora do ar')
     a=0
     try:
         adList = data_new['listingProps']['adList']    
