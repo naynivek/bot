@@ -19,7 +19,10 @@ import sys
 # Função que coleta dados da página 
 def json_from_url(url):
     headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36'}
-    page = requests.get(url, headers=headers)
+    try:
+        page = requests.get(url, headers=headers)
+    except:
+        return False
     if page.status_code == 200:
         soup = BeautifulSoup(page.text, 'html.parser')
         data_json = soup.find(id='initial-data').get('data-json')
@@ -60,13 +63,13 @@ usuario = sys.argv[4]
 url_eletronicos='https://df.olx.com.br/distrito-federal-e-regiao?ot=1&pe='+prec_max+'&ps='+prec_min+'&q='+busca+'&sf=1'
 data = json_from_url(url_eletronicos)
 if data is False:
-    time.sleep(3)
+    time.sleep(5)
     data = json_from_url(url_eletronicos)
     if data is False:
-        time.sleep(3)
+        time.sleep(10)
         data = json_from_url(url_eletronicos)
         if data is False:
-            time.sleep(3)
+            time.sleep(20)
             data = json_from_url(url_eletronicos)
             if data is False:
                 bot.sendMessage(usuario, 'Problemas para acessar o site, ele pode estar fora do ar')
@@ -97,36 +100,30 @@ while True:
     time.sleep(300)
     data_new = json_from_url(url_eletronicos)
     if data_new is False:
-        time.sleep(3)
+        bot.sendMessage(usuario, 'Site falhou 1x, tentando novamente')
+        time.sleep(5)
         data_new = json_from_url(url_eletronicos)
         if data_new is False:
-            time.sleep(3)
+            bot.sendMessage(usuario, 'Site falhou 2x, tentando novamente')
+            time.sleep(10)
             data_new = json_from_url(url_eletronicos)
             if data_new is False:
-                time.sleep(3)
+                bot.sendMessage(usuario, 'Site falhou 3x')
+                time.sleep(20)
                 data_new = json_from_url(url_eletronicos)
                 if data_new is False:
                     bot.sendMessage(usuario, 'Problemas para acessar o site, ele pode estar fora do ar')
-    a=0
-    try:
-        adList = data_new['listingProps']['adList']    
-        for anuncio in adList:
-            subject = anuncio.get('subject')
-            if subject and anuncio.get('listId') not in lista:
-                lista.append(anuncio.get('listId'))
-                descricao = anuncio.get('subject')        
-                url = anuncio.get('url')
-                mensagem = ('-----------------------------------'+'\n'
-                'Nova oferta encontrada!'+'\n'
-                'Descrição do produto: '+descricao+'\n'
-                'Link do produto: '+url            )
-                bot.sendMessage(usuario, mensagem)
-                mostra_dados_do_anuncio(url)
-                a=1
-#        if a == 0:
-#            print('Nenhuma oferta nova no momento')
-    except:
-        bot.sendMessage(usuario, 'Problemas para puxar os anúncios')
-        
-
+    adList = data_new['listingProps']['adList']    
+    for anuncio in adList:
+        subject = anuncio.get('subject')
+        if subject and anuncio.get('listId') not in lista:
+            lista.append(anuncio.get('listId'))
+            descricao = anuncio.get('subject')        
+            url = anuncio.get('url')
+            mensagem = ('-----------------------------------'+'\n'
+            'Nova oferta encontrada!'+'\n'
+            'Descrição do produto: '+descricao+'\n'
+            'Link do produto: '+url            )
+            bot.sendMessage(usuario, mensagem)
+            mostra_dados_do_anuncio(url)
 
