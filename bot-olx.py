@@ -26,8 +26,10 @@ def json_from_url(url):
     if page.status_code == 200:
         soup = BeautifulSoup(page.text, 'html.parser')
         data_json = soup.find(id='initial-data').get('data-json')
+        page.close()
         return json.loads(data_json)
     else:
+        page.close()
         return False
         
 
