@@ -55,7 +55,7 @@ bot = telepot.Bot('1223273819:AAGIleGROBgbWyGT77tqeSZR9QZbMyhXMpM')
 busca = sys.argv[1]
 prec_min = sys.argv[2]
 prec_max = sys.argv[3]
-usuario = sys.argv[4]
+usuario = sys.argv[4] #89627667
 
 
 # Pega a lista de produtos na página solicitada com filtros
