@@ -13,7 +13,6 @@ from bs4 import BeautifulSoup
 import requests
 import json  
 import time
-import telepot
 import sys
 
 # Função que coleta dados da página 
@@ -31,7 +30,17 @@ def json_from_url(url):
     else:
         page.close()
         return False
-        
+
+# Função que envia mensagem pelo telegram
+def telegram_bot_sendtext(bot_message):
+    
+    bot_token = '1223273819:AAGIleGROBgbWyGT77tqeSZR9QZbMyhXMpM'
+    bot_chatID = '89627667'
+    send_text = 'https://api.telegram.org/bot' + bot_token + '/sendMessage?chat_id=' + bot_chatID + '&parse_mode=Markdown&text=' + bot_message
+
+    response = requests.get(send_text)
+
+    return response.json()
 
 # Função que recebe url do anúncio e mostra nome do vendedor, telefone, descrição do produto e preço
 def mostra_dados_do_anuncio(url):
@@ -44,14 +53,10 @@ def mostra_dados_do_anuncio(url):
     telefone = 'Telefone: '+phone
     descri = 'Descrição: '+descricao
     price = 'preco: '+str(preco)
-    bot.sendMessage(usuario, vendedor)
-    bot.sendMessage(usuario, telefone)
-    bot.sendMessage(usuario, descri)
-    bot.sendMessage(usuario, price)
-
-# Declara o token do bot
-bot = telepot.Bot('1223273819:AAGIleGROBgbWyGT77tqeSZR9QZbMyhXMpM')
-
+    telegram_bot_sendtext(vendedor)
+    telegram_bot_sendtext(telefone)
+    telegram_bot_sendtext(descri)
+    telegram_bot_sendtext(price)
 # Estipula os filtros
 
 busca = sys.argv[1]
@@ -74,7 +79,7 @@ if data is False:
             time.sleep(20)
             data = json_from_url(url_eletronicos)
             if data is False:
-                bot.sendMessage(usuario, 'Problemas para acessar o site, ele pode estar fora do ar')
+                telegram_bot_sendtext('Problemas para acessar o site, ele pode estar fora do ar')
 
 # Entra em cada anúncio e mostra o telefone
 lista = []
@@ -92,7 +97,7 @@ for anuncio in adList:
 #        bot.sendMessage(89627667, mensagem)
 #        mostra_dados_do_anuncio(url)
 #        bot.sendMessage(89627667, 'bot rodando')
-bot.sendMessage(usuario, 'Bot rodando com o seguinte filtro \n \
+telegram_bot_sendtext('Bot rodando com o seguinte filtro \n \
                 Busca: '+busca+' \n \
                 Preço mínimo: '+prec_min+'\n \
                 Preço máximo: '+prec_max+'\n \
@@ -102,19 +107,19 @@ while True:
     time.sleep(300)
     data_new = json_from_url(url_eletronicos)
     if data_new is False:
-        bot.sendMessage(usuario, 'Site falhou 1x, tentando novamente')
+        telegram_bot_sendtext('Site falhou 1x, tentando novamente')
         time.sleep(5)
         data_new = json_from_url(url_eletronicos)
         if data_new is False:
-            bot.sendMessage(usuario, 'Site falhou 2x, tentando novamente')
+            telegram_bot_sendtext('Site falhou 2x, tentando novamente')
             time.sleep(10)
             data_new = json_from_url(url_eletronicos)
             if data_new is False:
-                bot.sendMessage(usuario, 'Site falhou 3x')
+                telegram_bot_sendtext('Site falhou 3x')
                 time.sleep(20)
                 data_new = json_from_url(url_eletronicos)
                 if data_new is False:
-                    bot.sendMessage(usuario, 'Problemas para acessar o site, ele pode estar fora do ar')
+                    telegram_bot_sendtext('Problemas para acessar o site, ele pode estar fora do ar')
     adList = data_new['listingProps']['adList']    
     for anuncio in adList:
         subject = anuncio.get('subject')
@@ -126,6 +131,6 @@ while True:
             'Nova oferta encontrada!'+'\n'
             'Descrição do produto: '+descricao+'\n'
             'Link do produto: '+url            )
-            bot.sendMessage(usuario, mensagem)
+            telegram_bot_sendtext(mensagem)
             mostra_dados_do_anuncio(url)
 
