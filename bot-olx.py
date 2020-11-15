@@ -132,5 +132,8 @@ while True:
             'Descrição do produto: '+descricao+'\n'
             'Link do produto: '+url            )
             telegram_bot_sendtext(mensagem)
-            mostra_dados_do_anuncio(url)
+            try:
+                mostra_dados_do_anuncio(url)
+            except:
+                telegram_bot_sendtext('erro ao solicitar dados')
 
