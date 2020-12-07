@@ -64,6 +64,8 @@ prec_min = sys.argv[2]
 prec_max = sys.argv[3]
 usuario = sys.argv[4] #89627667
 
+#ID lorraine 25944495
+#ID Kevin 89627667
 
 # Pega a lista de produtos na página solicitada com filtros
 
