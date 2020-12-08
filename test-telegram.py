@@ -13,3 +13,4 @@ bot = telepot.Bot('1223273819:AAGIleGROBgbWyGT77tqeSZR9QZbMyhXMpM')
 bot.getMe
 
 bot.sendMessage(89627667, 'Erro ao buscar as ofertas')
+#123
