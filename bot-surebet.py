@@ -40,7 +40,7 @@ def get_info_url(url):
 def telegram_bot_sendtext(bot_message):
     
     bot_token = '1223273819:AAGIleGROBgbWyGT77tqeSZR9QZbMyhXMpM'
-    bot_chatID = 'usuario'
+    bot_chatID = '89627667'
     send_text = 'https://api.telegram.org/bot' + bot_token + '/sendMessage?chat_id=' + bot_chatID + '&parse_mode=Markdown&text=' + bot_message
 
     response = requests.get(send_text)
@@ -60,20 +60,17 @@ for i in content:
     date = i.find_all('td', class_ = 'time')
     event = i.find_all('td', class_ = 'event')
     bet = i.find_all('td', class_ = 'coeff')
-    print('_______________________________________________')  
-    print('                Inicio da aposta')  
-    print('Primeira aposta')  
-    print(' '+booker[0].a.text);
-    print(' '+date[0].get_text("-"))
-    print(' '+event[0].get_text("-"))
-    print(' https://pt.surebet.com'+event[0].a['href'])
-    print(' '+bet[0].abbr['title']+bet[0].text)
-    
-    print('Segunda aposta')  
-    print(' '+booker[1].a.text);
-    print(' '+date[1].get_text("-"))
-    print(' '+event[1].get_text("-"))
-    print(' https://pt.surebet.com'+event[1].a['href'])
-    print(' '+bet[1].abbr['title']+bet[1].text)
-    print('                  Fim da aposta')  
-    print('_______________________________________________')
+    message = ('NOVA APOSTA CERTA ENCONTRADA!'+'\n'
+            '+-+-+Primeira aposta+-+-+'+'\n'
+            ' '+booker[0].a.text+'\n'
+            ' '+date[0].get_text("-")+'\n'
+            ' '+event[0].get_text("-")+'\n'
+            ' https://pt.surebet.com'+event[0].a['href']+'\n'
+            ' '+bet[0].abbr['title']+bet[0].text+'\n'
+            '+-+-+Segunda aposta+-+-+'+'\n'
+            ' '+booker[1].a.text+'\n'
+            ' '+date[1].get_text("-")+'\n'
+            ' '+event[1].get_text("-")+'\n'
+            ' https://pt.surebet.com'+event[1].a['href']+'\n'
+            ' '+bet[1].abbr['title']+bet[1].text+'\n')
+    telegram_bot_sendtext(message)
