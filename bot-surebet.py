@@ -70,7 +70,7 @@ for i in content:
     lista.append(date[0]['data-utc'])
 
 while True:
-    time.sleep(10)
+    time.sleep(600)
     raw_content = get_info_url(url_apostas)
     content = raw_content('tbody')
     for i in content:
