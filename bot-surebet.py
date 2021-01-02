@@ -56,6 +56,7 @@ for i in content:
     date = i.find_all('td', class_ = 'time')
     event = i.find_all('td', class_ = 'event')
     bet = i.find_all('td', class_ = 'coeff')
+    odd = i.find_all('td', class_ = 'value')
     message = ('NOVA APOSTA CERTA ENCONTRADA!'+'\n'
             '+-+-+Primeira aposta+-+-+'+'\n'
             ' '+booker[0].a.text+'\n'
@@ -63,12 +64,14 @@ for i in content:
             ' '+event[0].get_text("-")+'\n'
             ' https://pt.surebet.com'+event[0].a['href']+'\n'
             ' '+bet[0].abbr['title']+bet[0].text+'\n'
+            ' '+odd[0].get_text("-")+'\n'
             '+-+-+Segunda aposta+-+-+'+'\n'
             ' '+booker[1].a.text+'\n'
             ' '+date[1].get_text("-")+'\n'
             ' '+event[1].get_text("-")+'\n'
             ' https://pt.surebet.com'+event[1].a['href']+'\n'
-            ' '+bet[1].abbr['title']+bet[1].text+'\n')
+            ' '+bet[1].abbr['title']+bet[1].text+'\n'
+            ' '+odd[1].get_text("-")+'\n')
     telegram_bot_sendtext(message)
     lista.append(date[0]['data-utc'])
 
@@ -81,6 +84,7 @@ while True:
         date = i.find_all('td', class_ = 'time')
         event = i.find_all('td', class_ = 'event')
         bet = i.find_all('td', class_ = 'coeff')
+        odd = i.find_all('td', class_ = 'value')
         if date[0]['data-utc'] not in lista:
             message = ('NOVA APOSTA CERTA ENCONTRADA!'+'\n'
                     '+-+-+Primeira aposta+-+-+'+'\n'
@@ -89,11 +93,13 @@ while True:
                     ' '+event[0].get_text("-")+'\n'
                     ' https://pt.surebet.com'+event[0].a['href']+'\n'
                     ' '+bet[0].abbr['title']+bet[0].text+'\n'
+                    ' '+odd[0].get_text("-")+'\n'
                     '+-+-+Segunda aposta+-+-+'+'\n'
                     ' '+booker[1].a.text+'\n'
                     ' '+date[1].get_text("-")+'\n'
                     ' '+event[1].get_text("-")+'\n'
                     ' https://pt.surebet.com'+event[1].a['href']+'\n'
-                    ' '+bet[1].abbr['title']+bet[1].text+'\n')
+                    ' '+bet[1].abbr['title']+bet[1].text+'\n'
+                    ' '+odd[1].get_text("-")+'\n')
             telegram_bot_sendtext(message)
             lista.append(date[0]['data-utc'])
