@@ -52,13 +52,16 @@ raw_content = get_info_url(url_apostas)
 lista = []
 content = raw_content('tbody')
 for i in content:
+    profit_box = i.find_all('td', class_ = 'profit-box')
     booker = i.find_all('td', class_ = 'booker')
     date = i.find_all('td', class_ = 'time')
     event = i.find_all('td', class_ = 'event')
     bet = i.find_all('td', class_ = 'coeff')
     odd = i.find_all('td', class_ = 'value')
+    prof = ' '+(profit_box[0].find(class_ = 'profit')).get_text("-")+'\n'
     message = ('NOVA APOSTA CERTA ENCONTRADA!'+'\n'
-            '+-+-+Primeira aposta+-+-+'+'\n'
+            'LUCRO: '' '+prof+'\n'
+            '+-+-+Primeira aposta+-+-+'+'\n'        
             ' '+booker[0].a.text+'\n'
             ' '+date[0].get_text("-")+'\n'
             ' '+event[0].get_text("-")+'\n'
@@ -80,14 +83,17 @@ while True:
     raw_content = get_info_url(url_apostas)
     content = raw_content('tbody')
     for i in content:
+        profit_box = i.find_all('td', class_ = 'profit-box')
         booker = i.find_all('td', class_ = 'booker')
         date = i.find_all('td', class_ = 'time')
         event = i.find_all('td', class_ = 'event')
         bet = i.find_all('td', class_ = 'coeff')
         odd = i.find_all('td', class_ = 'value')
+        prof = ' '+(profit_box[0].find(class_ = 'profit')).get_text("-")+'\n'
         if date[0]['data-utc'] not in lista:
             message = ('NOVA APOSTA CERTA ENCONTRADA!'+'\n'
-                    '+-+-+Primeira aposta+-+-+'+'\n'
+                    'LUCRO: '' '+prof+'\n'
+                    '+-+-+Primeira aposta+-+-+'+'\n'        
                     ' '+booker[0].a.text+'\n'
                     ' '+date[0].get_text("-")+'\n'
                     ' '+event[0].get_text("-")+'\n'
