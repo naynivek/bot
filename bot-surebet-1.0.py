@@ -103,26 +103,27 @@ while True:
                 prof = ' '+(profit_box[0].find(class_ = 'profit')).get_text("-")+'\n'
                 age = ' '+(profit_box[0].find(class_ = 'age')).get_text("-")+'\n'
                 calc = 'https://pt.surebet.com'+(profit_box[0].find(class_ = 'btn-site'))['href']+'\n'
-                message = ('NOVA APOSTA CERTA ENCONTRADA!'+'\n'
-                        'LUCRO: '+prof+'\n'
-                        'IDADE: '+age+'\n'
-                        'CALCULADORA: '+calc+'\n'
-                        '+-+-+Primeira aposta+-+-+'+'\n'        
-                        ' '+booker[0].a.text+'\n'
-                        ' '+date[0].get_text("-")+'\n'
-                        ' '+event[0].get_text("-")+'\n'
-                        ' https://pt.surebet.com'+event[0].a['href']+'\n'
-                        ' '+bet[0].abbr['title']+bet[0].text+'\n'
-                        ' '+odd[0].get_text("-")+'\n'
-                        '+-+-+Segunda aposta+-+-+'+'\n'
-                        ' '+booker[1].a.text+'\n'
-                        ' '+date[1].get_text("-")+'\n'
-                        ' '+event[1].get_text("-")+'\n'
-                        ' https://pt.surebet.com'+event[1].a['href']+'\n'
-                        ' '+bet[1].abbr['title']+bet[1].text+'\n'
-                        ' '+odd[1].get_text("-")+'\n')
-                telegram_bot_sendtext(message)
-                lista.append(date[0]['data-utc'])
+                if date[0]['data-utc'] not in lista:
+                    message = ('NOVA APOSTA CERTA ENCONTRADA!'+'\n'
+                            'LUCRO: '+prof+'\n'
+                            'IDADE: '+age+'\n'
+                            'CALCULADORA: '+calc+'\n'
+                            '+-+-+Primeira aposta+-+-+'+'\n'        
+                            ' '+booker[0].a.text+'\n'
+                            ' '+date[0].get_text("-")+'\n'
+                            ' '+event[0].get_text("-")+'\n'
+                            ' https://pt.surebet.com'+event[0].a['href']+'\n'
+                            ' '+bet[0].abbr['title']+bet[0].text+'\n'
+                            ' '+odd[0].get_text("-")+'\n'
+                            '+-+-+Segunda aposta+-+-+'+'\n'
+                            ' '+booker[1].a.text+'\n'
+                            ' '+date[1].get_text("-")+'\n'
+                            ' '+event[1].get_text("-")+'\n'
+                            ' https://pt.surebet.com'+event[1].a['href']+'\n'
+                            ' '+bet[1].abbr['title']+bet[1].text+'\n'
+                            ' '+odd[1].get_text("-")+'\n')
+                    telegram_bot_sendtext(message)
+                    lista.append(date[0]['data-utc'])
     else:
         print('erro')
         
