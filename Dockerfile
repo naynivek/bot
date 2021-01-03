@@ -8,5 +8,5 @@ COPY . .
 RUN pip3 install --upgrade pip
 RUN pip install --no-cache-dir -r requirements.txt
 
-CMD ["python", "bot-surebet.py"]
+CMD ["python", "bot-surebet-1.0.py"]
 
