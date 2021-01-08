@@ -12,14 +12,11 @@ Created on Tue Jan  5 17:59:45 2021
 @author: Kevin Yan
 """
 import time
-#from urllib.request import urlopen
 from selenium import webdriver
-#from selenium.webdriver.common.keys import Keys
-#from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.chrome.options import Options
-#import undetected_chromedriver as uc
-#from selenium.webdriver.support import expected_conditions as EC
 import requests
+from http.server import BaseHTTPRequestHandler, HTTPServer
+import time
 
 options = Options()
 #options.binary_location = "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
@@ -132,6 +129,28 @@ except:
     
 loop.click()
 
+hostName = "0.0.0.0"
+serverPort = 8080
+
+class MyServer(BaseHTTPRequestHandler):
+    def do_GET(self):
+        self.send_response(200)
+        self.send_header("Content-type", "text/html")
+        self.end_headers()
+        self.wfile.write(bytes("<html><head><title>https://pythonbasics.org</title></head>", "utf-8"))
+        self.wfile.write(bytes("<p>Request: %s</p>" % self.path, "utf-8"))
+        self.wfile.write(bytes("<body>", "utf-8"))
+        self.wfile.write(bytes("<p>Server Running.</p>", "utf-8"))
+        self.wfile.write(bytes("</body></html>", "utf-8"))
+
+if __name__ == "__main__":        
+    webServer = HTTPServer((hostName, serverPort), MyServer)
+    print("Server started http://%s:%s" % (hostName, serverPort))
+
+    try:
+        webServer.serve_forever()
+    except KeyboardInterrupt:
+        pass
 
 while True:
     try:
